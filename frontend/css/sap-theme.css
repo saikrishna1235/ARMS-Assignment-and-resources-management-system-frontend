@@ -1,0 +1,439 @@
+/* ===== SAP GLOBAL THEME ===== */
+:root {
+    --sap-bg: #cfd7e5;
+    --sap-panel: #e7edf5;
+    --sap-panel-dark: #bdc7d8;
+    --sap-header: #4f668b;
+    --sap-header-light: #6e84a8;
+    --sap-border: #9ca9bd;
+    --sap-text: #1a1a1a;
+    --sap-highlight: #fffbcc;
+    --sap-table-header: #dde4f2;
+    --sap-table-row-alt: #f4f6fa;
+    --sap-accent: #ffcc33;
+}
+
+body {
+    background: var(--sap-bg);
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    font-size: 13px;
+    color: var(--sap-text);
+}
+
+/* Top SAP header bar */
+.sap-shell-header {
+    height: 32px;
+    background: linear-gradient(to bottom, var(--sap-header-light), var(--sap-header));
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 12px;
+}
+
+.sap-shell-header .sap-logo {
+    font-weight: normal;
+    margin-right: 10px;
+}
+
+/* Content frame (like SAP GUI window) */
+.sap-window {
+    margin: 10px;
+    border: 1px solid var(--sap-border);
+    background: var(--sap-panel);
+    box-shadow: 0 0 4px rgba(0,0,0,0.25);
+}
+
+/* Window title bar */
+.sap-window-title {
+    background: var(--sap-panel-dark);
+    padding: 4px 8px;
+    font-size: 12px;
+    border-bottom: 1px solid var(--sap-border);
+}
+
+/* Toolbar (icons row) */
+.sap-toolbar {
+    background: var(--sap-panel);
+    border-bottom: 1px solid var(--sap-border);
+    padding: 2px 4px;
+    display: flex;
+    gap: 6px;
+    font-size: 12px;
+}
+
+.sap-toolbar button {
+    border: 1px solid var(--sap-border);
+    background: #f5f7fb;
+    padding: 2px 6px;
+    font-size: 12px;
+}
+
+.sap-toolbar button:hover {
+    background: var(--sap-highlight);
+}
+
+/* Layout: left tree + right content */
+.sap-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: 480px;
+}
+
+/* Left navigation tree */
+.sap-side-nav {
+    border-right: 1px solid var(--sap-border);
+    background: #f1f4fb;
+    padding: 6px;
+    font-size: 12px;
+}
+
+.sap-tree-title {
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.sap-tree {
+    list-style: none;
+    padding-left: 0;
+}
+
+.sap-tree li {
+    padding: 2px 4px;
+    cursor: default;
+}
+
+.sap-tree li.active,
+.sap-tree li:hover {
+    background: var(--sap-highlight);
+    border: 1px solid #e0d36e;
+}
+
+/* Main content area */
+.sap-main {
+    padding: 8px;
+}
+
+/* SAP-like table */
+.table-sap {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.table-sap th,
+.table-sap td {
+    border: 1px solid var(--sap-border);
+    padding: 3px 4px;
+}
+
+.table-sap th {
+    background: var(--sap-table-header);
+    font-weight: normal;
+}
+
+.table-sap tr:nth-child(even) {
+    background: var(--sap-table-row-alt);
+}
+
+/* Simple section header */
+.sap-section-header {
+    font-size: 12px;
+    font-weight: normal;
+    padding: 4px 6px;
+    background: var(--sap-panel-dark);
+    border: 1px solid var(--sap-border);
+    margin-bottom: 4px;
+}
+
+/* Form fields (SAP-ish) */
+.sap-form-label {
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+
+.sap-form-input {
+    border: 1px solid var(--sap-border);
+    background: #fff;
+    font-size: 12px;
+    height: 26px;
+}
+
+/* Toast SAP style override */
+.toast.sap-toast {
+    font-size: 12px;
+    background-color: #ffd6d6;
+    color: #660000;
+    border: 1px solid #b88;
+}
+.sap-btn {
+    background: #f5f7fb;
+    border: 1px solid var(--sap-border);
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 0;
+    color: var(--sap-text);
+}
+
+.sap-btn:hover {
+    background: var(--sap-highlight);
+}
+
+.sap-btn-danger {
+    background: #fbeaea;
+    border: 1px solid #bb7777;
+}
+
+.sap-btn-danger:hover {
+    background: #ffcccc;
+}
+/* ==================== MOBILE / RESPONSIVE TWEAKS ==================== */
+
+/* Medium and below (tablets + phones) */
+@media (max-width: 992px) {
+
+    /* Layout: stack side-nav on top, content below */
+    .sap-layout {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+
+    .sap-side-nav {
+        border-right: none;
+        border-bottom: 1px solid var(--sap-border);
+    }
+
+    .sap-main {
+        padding: 6px;
+    }
+
+    /* Toolbar: allow wrapping */
+    .sap-toolbar {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+}
+
+/* Small screens (phones) */
+@media (max-width: 576px) {
+
+    body {
+        font-size: 12px;
+    }
+
+    .sap-shell-header {
+        font-size: 11px;
+        padding: 0 6px;
+    }
+
+    .sap-window {
+        margin: 5px;
+    }
+
+    .sap-side-nav {
+        padding: 4px;
+    }
+
+    /* Make left menu horizontal & scrollable if needed */
+    .sap-tree {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 4px;
+    }
+
+    .sap-tree li {
+        border-radius: 3px;
+        white-space: nowrap;
+        padding: 4px 6px;
+    }
+
+    /* Section header more compact */
+    .sap-section-header {
+        font-size: 11px;
+        padding: 3px 5px;
+    }
+
+    /* Forms – full width, more touch-friendly */
+    .sap-form-input,
+    .sap-panel .form-control {
+        font-size: 12px;
+        height: auto;
+        padding: 4px 6px;
+    }
+
+    /* Buttons bigger for touch */
+    .sap-toolbar button,
+    .sap-btn,
+    .btn {
+        font-size: 12px;
+        padding: 4px 10px;
+    }
+
+    /* Tables: horizontal scroll instead of squishing */
+    .sap-main {
+        overflow-x: auto;
+    }
+
+    .table-sap {
+        min-width: 600px; /* forces scroll on very small screens */
+    }
+
+    /* Change-password panel: take full width on phones */
+    #section-profile .sap-panel {
+        max-width: 100%;
+    }
+}
+/* ===========================================
+   MOBILE RESPONSIVE STYLES FOR STUDENT UI
+   =========================================== */
+
+/* Tablets & Phones */
+@media (max-width: 992px) {
+
+    /* Layout stacking */
+    .sap-sidebar {
+        height: auto;
+        border-right: none;
+        border-bottom: 2px solid #b6c6d8;
+        margin-bottom: 10px;
+    }
+
+    .sap-content {
+        height: auto;
+        padding: 10px;
+    }
+
+    /* Sidebar menu buttons */
+    .sap-tree button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+/* Phones only */
+@media (max-width: 576px) {
+
+    /* Header */
+    .sap-header {
+        font-size: 12px;
+        padding: 8px 10px;
+    }
+
+    .sap-header button {
+        padding: 4px 10px;
+        font-size: 12px;
+    }
+
+    /* Sidebar becomes horizontal scroll menu */
+    .sap-sidebar {
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 6px;
+    }
+
+    .sap-tree {
+        display: flex;
+        gap: 6px;
+    }
+
+    .sap-tree button {
+        display: inline-block;
+        width: auto;
+        white-space: nowrap;
+        font-size: 13px;
+        padding: 8px 12px;
+        border-radius: 6px;
+    }
+
+    /* Content padding */
+    .sap-content {
+        padding: 10px;
+    }
+
+    /* Panels compact */
+    .sap-panel {
+        padding: 8px;
+        margin-bottom: 12px;
+    }
+
+    .sap-panel-title {
+        font-size: 13px;
+        padding: 4px 0;
+    }
+
+    /* Course cards */
+    .sap-course-card {
+        padding: 6px;
+        font-size: 12px;
+    }
+
+    /* Tables scroll horizontally instead of squeezing text */
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    /* Form fields */
+    .form-control,
+    .form-select {
+        font-size: 13px !important;
+        padding: 6px !important;
+    }
+
+    /* Buttons */
+    .sap-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    /* Modal responsive */
+    .modal-dialog {
+        margin: 10px;
+    }
+}
+/* Remove large gaps on mobile */
+.sap-content section {
+    margin-top: 0 !important;
+    padding-top: 5px !important;
+}
+
+/* Fix extra space caused by Bootstrap columns */
+@media (max-width: 768px) {
+    .sap-content {
+        padding-top: 5px !important;
+    }
+}
+/* === Remove big empty gap above content === */
+.sap-content section {
+    margin-top: 0 !important;
+    padding-top: 5px !important;
+}
+
+/* === Fix extra padding + scroll issues on mobile === */
+@media (max-width: 768px) {
+
+    /* Reduce padded area in small screens */
+    .sap-content {
+        padding-top: 8px !important;
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+
+    /* Sidebar becomes auto-height */
+    .sap-sidebar {
+        height: auto !important;
+        margin-bottom: 10px;
+    }
+
+    /* Sections look clean on mobile */
+    .sap-panel {
+        margin-top: 8px !important;
+    }
+
+    /* Prevent horizontal scroll */
+    body, html {
+        overflow-x: hidden !important;
+    }
+}

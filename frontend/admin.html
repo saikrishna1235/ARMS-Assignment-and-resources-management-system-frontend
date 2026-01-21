@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SAP – Admin Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- SAP Theme -->
+    <link href="css/sap-theme.css" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- SAP Header -->
+<div class="sap-shell-header">
+    <span class="sap-logo">ARMS</span>
+    <span>| Admin – System Management</span>
+</div>
+
+<!-- SAP Window -->
+<div class="sap-window">
+    <div class="sap-window-title">LMS Administration Console</div>
+
+<!-- SAP Toolbar -->
+<div class="sap-toolbar">
+
+    <span style="flex:1"></span>
+
+    <button onclick="logout()">Logout</button>
+
+    <button onclick="showSection('teachers')">Manage Teachers</button>
+    <button onclick="showSection('students')">Manage Students</button>
+    <button onclick="showSection('courses')">Manage Courses</button>
+
+</div>
+
+
+    <!-- Page Layout -->
+    <div class="sap-layout">
+
+        <!-- LEFT SIDE TREE -->
+        <div class="sap-side-nav">
+            <div class="sap-tree-title">Admin Sections</div>
+            <ul class="sap-tree">
+                <li onclick="showSection('teachers')">Teacher Accounts</li>
+                <li onclick="showSection('students')">Student Accounts</li>
+                <li onclick="showSection('courses')">Courses</li>
+                <li onclick="showSection('enrollment')">Enrollments</li>
+                <li onclick="showSection('profile')">Profile</li>
+            </ul>
+        </div>
+
+        <!-- RIGHT CONTENT AREA -->
+        <div class="sap-main">
+
+            <!-- ====================== MANAGE TEACHERS ====================== -->
+            <div id="section-teachers" class="section">
+
+                <div class="sap-section-header">Teacher Accounts</div>
+
+                <div class="mb-2">
+                    <button class="btn btn-sm btn-primary" onclick="openTeacherForm()">+ Add Teacher</button>
+                </div>
+
+                <table class="table-sap" id="teacherTable">
+                    <thead>
+                        <tr>
+                            <!-- <th>ID</th> -->
+                            <th>Username</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Filled dynamically -->
+                    </tbody>
+                </table>
+            </div>
+            <!-- ====================== PROFILE / CHANGE PASSWORD ====================== -->
+<div id="section-profile" class="section" style="display:none;">
+
+    <div class="sap-section-header">Change Password</div>
+
+    <div class="sap-panel p-4" style="max-width: 500px;">
+        <label class="sap-form-label">Old Password</label>
+        <input type="password" id="admin_oldpass" class="form-control mb-2">
+
+        <label class="sap-form-label">New Password</label>
+        <input type="password" id="admin_newpass" class="form-control mb-2">
+
+        <label class="sap-form-label">Confirm Password</label>
+        <input type="password" id="admin_confirmpass" class="form-control mb-3">
+
+        <button class="btn btn-primary w-100" onclick="updateAdminPassword()">Update Password</button>
+    </div>
+
+</div>
+
+            <!-- ====================== MANAGE STUDENTS ====================== -->
+            <div id="section-students" class="section" style="display:none;">
+
+                <div class="sap-section-header">Student Accounts</div>
+
+                <div class="mb-2">
+                    <button class="btn btn-sm btn-primary" onclick="openStudentForm()">+ Add Student</button>
+                </div>
+
+                <table class="table-sap" id="studentTable">
+                    <thead>
+                        <tr>
+                            <!-- <th>ID</th> -->
+                            <th>Username</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Filled dynamically -->
+                    </tbody>
+                </table>
+            </div>
+            <!-- ====================== ENROLLMENT SECTION ====================== -->
+<div id="section-enrollment" class="section" style="display:none;">
+    <div class="sap-section-header">Course Enrollment</div>
+
+    <div class="row">
+
+        <!-- STUDENT ENROLL -->
+        <div class="col-md-6">
+            <div class="sap-panel p-3">
+                <h6>Enroll Student to Course</h6>
+
+                <label class="sap-form-label">Student</label>
+                <select id="enroll_student" class="form-control mb-2"></select>
+
+                <label class="sap-form-label">Course</label>
+                <select id="enroll_student_course" class="form-control mb-3"></select>
+
+                <button class="btn btn-primary w-100" onclick="enrollStudent()">Enroll</button>
+            </div>
+        </div>
+
+        <!-- TEACHER ASSIGN -->
+        <div class="col-md-6">
+            <div class="sap-panel p-3">
+                <h6>Assign Teacher to Course</h6>
+
+                <label class="sap-form-label">Teacher</label>
+                <select id="assign_teacher" class="form-control mb-2"></select>
+
+                <label class="sap-form-label">Course</label>
+                <select id="assign_teacher_course" class="form-control mb-3"></select>
+
+                <button class="btn btn-success w-100" onclick="assignTeacher()">Assign</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+            <!-- ====================== MANAGE COURSES ====================== -->
+            <div id="section-courses" class="section" style="display:none;">
+
+                <div class="sap-section-header">Courses Management</div>
+
+                <div class="mb-2">
+                    <button class="btn btn-sm btn-primary" onclick="openCourseForm()">+ Add Course</button>
+                </div>
+
+                <table class="table-sap" id="courseTable">
+                    <thead>
+                        <tr>
+                            <!-- <th>ID</th> -->
+                            <th>Course Name</th>
+                            <th>Assigned Teacher</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                        
+                    </thead>
+                    <tbody>
+                        <!-- Filled dynamically -->
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div><!-- /sap-main -->
+    </div><!-- /sap-layout -->
+</div><!-- /sap-window -->
+<!-- Add Teacher Modal -->
+<div class="modal fade" id="modalAddTeacher" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background: var(--sap-panel); border:1px solid var(--sap-border);">
+
+      <div class="modal-header" style="background: var(--sap-panel-dark);">
+        <h6 class="modal-title">Create Teacher Account</h6>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <label class="sap-form-label">Full Name</label>
+        <input id="t_fullname" class="form-control sap-form-input mb-2">
+
+        <label class="sap-form-label">Email</label>
+        <input id="t_email" class="form-control sap-form-input mb-2">
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-sm btn-primary" onclick="saveTeacher()">Save</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Add Student Modal -->
+<div class="modal fade" id="modalAddStudent" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background: var(--sap-panel); border:1px solid var(--sap-border);">
+
+      <div class="modal-header" style="background: var(--sap-panel-dark);">
+        <h6 class="modal-title">Create Student Account</h6>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <label class="sap-form-label">Full Name</label>
+        <input id="s_fullname" class="form-control sap-form-input mb-2">
+
+        <label class="sap-form-label">Email</label>
+        <input id="s_email" class="form-control sap-form-input mb-2">
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-sm btn-primary" onclick="saveStudent()">Save</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Add Course Modal -->
+<div class="modal fade" id="modalAddCourse" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background: var(--sap-panel); border:1px solid var(--sap-border);">
+
+      <div class="modal-header" style="background: var(--sap-panel-dark);">
+        <h6 class="modal-title">Create Course</h6>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <label class="sap-form-label">Course Name</label>
+        <input id="c_name" class="form-control sap-form-input mb-2">
+
+        <label class="sap-form-label">Assign Teacher</label>
+        <select id="c_teacher" class="form-control sap-form-input mb-2">
+            <!-- Filled dynamically -->
+        </select>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-sm btn-primary" onclick="saveCourse()">Save</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Credentials Modal -->
+<div class="modal fade" id="modalCredentials" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background: var(--sap-panel); border:1px solid var(--sap-border);">
+
+      <div class="modal-header" style="background: var(--sap-panel-dark);">
+        <h6 class="modal-title">Account Credentials</h6>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <label class="sap-form-label">Username</label>
+        <div class="input-group mb-3">
+          <input id="cred_username" class="form-control sap-form-input" readonly>
+          <button class="btn btn-secondary" onclick="copyCredentials('cred_username')">Copy</button>
+        </div>
+
+        <label class="sap-form-label">Password</label>
+        <div class="input-group mb-3">
+          <input id="cred_password" class="form-control sap-form-input" readonly>
+          <button class="btn btn-secondary" onclick="copyCredentials('cred_password')">Copy</button>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-sm btn-primary" data-bs-dismiss="modal">OK</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Toast -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="toastBox" class="toast sap-toast">
+        <div class="toast-body" id="toastMessage"></div>
+    </div>
+</div>
+<div class="modal fade" id="modalEditTeacher" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background: var(--sap-panel); border:1px solid var(--sap-border);">
+
+      <div class="modal-header" style="background: var(--sap-panel-dark);">
+        <h6 class="modal-title">Edit Teacher</h6>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <input type="hidden" id="edit_teacher_id">
+
+        <label class="sap-form-label">Full Name</label>
+        <input id="edit_teacher_name" class="form-control sap-form-input mb-2">
+
+        <label class="sap-form-label">Email</label>
+        <input id="edit_teacher_email" class="form-control sap-form-input mb-2">
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-sm btn-primary" onclick="saveEditTeacher()">Save</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalDeleteTeacher" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background: var(--sap-panel); border:1px solid var(--sap-border);">
+
+      <div class="modal-header" style="background: var(--sap-panel-dark);">
+        <h6 class="modal-title">Delete Teacher</h6>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <p>Are you sure you want to delete this teacher?</p>
+        <input type="hidden" id="delete_teacher_id">
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-sm btn-danger" onclick="confirmDeleteTeacher()">Delete</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalAddStudent">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content sap-modal">
+      <div class="modal-header sap-modal-header">
+        <h5 class="modal-title">Create Student Account</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <label>Full Name</label>
+        <input type="text" id="student_fullname" class="form-control mb-2">
+
+        <label>Email</label>
+        <input type="email" id="student_email" class="form-control">
+      </div>
+
+      <div class="modal-footer sap-modal-footer">
+        <button class="sap-btn" data-bs-dismiss="modal">Cancel</button>
+        <button class="sap-btn-primary" onclick="saveStudent()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalEditStudent">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content sap-modal">
+      <div class="modal-header sap-modal-header">
+        <h5 class="modal-title">Edit Student</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <input type="hidden" id="edit_student_id">
+
+        <label>Full Name</label>
+        <input type="text" id="edit_student_name" class="form-control mb-2">
+
+        <label>Email</label>
+        <input type="email" id="edit_student_email" class="form-control">
+      </div>
+
+      <div class="modal-footer sap-modal-footer">
+        <button class="sap-btn" data-bs-dismiss="modal">Cancel</button>
+        <button class="sap-btn-primary" onclick="saveEditStudent()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalDeleteStudent">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content sap-modal">
+      <div class="modal-header sap-modal-header">
+        <h5 class="modal-title">Delete Student</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        Are you sure you want to delete this student?
+        <input type="hidden" id="delete_student_id">
+      </div>
+
+      <div class="modal-footer sap-modal-footer">
+        <button class="sap-btn" data-bs-dismiss="modal">Cancel</button>
+        <button class="sap-btn-danger" onclick="confirmDeleteStudent()">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ======================= SAP Style Edit Course ======================= -->
+<div class="modal fade" id="modalEditCourse" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content sap-modal">
+      
+      <div class="modal-header sap-modal-header">
+        <h5 class="modal-title">Edit Course</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+  <!-- REQUIRED HIDDEN FIELD -->
+  <input type="hidden" id="edit_course_id">
+
+  <div class="mb-3">
+    <label class="form-label">Course Name</label>
+    <input type="text" id="editCourseName" class="form-control sap-input">
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Assigned Teacher</label>
+    <select id="editCourseTeacher" class="form-control sap-input"></select>
+  </div>
+
+</div>
+
+
+      <div class="modal-footer sap-modal-footer">
+        <button class="sap-btn" data-bs-dismiss="modal">Cancel</button>
+        <button class="sap-btn-danger" onclick="saveEditCourse()">Save</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="modalDeleteCourse">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content sap-modal">
+
+      <div class="modal-header sap-modal-header">
+        <h5 class="modal-title">Delete Course</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        Are you sure you want to delete this course?
+        <input type="hidden" id="delete_course_id">
+      </div>
+
+      <div class="modal-footer sap-modal-footer">
+        <button class="sap-btn" data-bs-dismiss="modal">Cancel</button>
+        <button class="sap-btn-danger" onclick="confirmDeleteCourse()">Delete</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/admin.js"></script>
+<script>
+    // Prevent returning back to admin page after logout
+    window.onload = function() {
+        if (!sessionStorage.getItem("isLoggedIn")) {
+            window.location.href = "login.html";
+        }
+    };
+
+    // Disable browser back button
+    window.history.pushState(null, "", window.location.href);
+    window.onpopstate = function () {
+        window.history.pushState(null, "", window.location.href);
+    };
+    function openEditTeacher(id) {
+    let t = teacherData.find(x => x.teacher_id == id);
+
+    document.getElementById("edit_teacher_id").value = t.teacher_id;
+    document.getElementById("edit_teacher_name").value = t.full_name;
+    document.getElementById("edit_teacher_email").value = t.email;
+
+    new bootstrap.Modal(document.getElementById("modalEditTeacher")).show();
+}
+function saveEditTeacher() {
+    let id = document.getElementById("edit_teacher_id").value;
+    let fullname = document.getElementById("edit_teacher_name").value;
+    let email = document.getElementById("edit_teacher_email").value;
+
+    fetch("http://localhost:5000/admin/edit-teacher", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, fullname, email })
+    })
+    .then(res => res.json())
+    .then(data => {
+        showToast(data.message);
+        loadTeachers();
+        bootstrap.Modal.getInstance(document.getElementById("modalEditTeacher")).hide();
+    });
+}
+function openDeleteTeacher(id) {
+    document.getElementById("delete_teacher_id").value = id;
+    new bootstrap.Modal(document.getElementById("modalDeleteTeacher")).show();
+}
+function confirmDeleteTeacher() {
+    let id = document.getElementById("delete_teacher_id").value;
+
+    fetch(`http://localhost:5000/admin/delete-teacher?id=${id}`, {
+        method: "DELETE"
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        showToast(data.message);
+        loadTeachers();
+
+        // FIX warning
+        document.activeElement.blur();
+
+        bootstrap.Modal.getInstance(
+            document.getElementById("modalDeleteTeacher")
+        ).hide();
+    });
+}
+  
+
+</script>
+
+</body>
+</html>
