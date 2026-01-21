@@ -1,4 +1,5 @@
 // frontend/js/teacher.js
+const API_BASE_URL = "https://arms-assignment-and-resources-management-system.up.railway.app";
 
 const API_BASE = "http://localhost:5000";
 
@@ -673,3 +674,4 @@ document.getElementById("btnChangePassword").addEventListener("click", () => {
         }
     });
 }); 
+
