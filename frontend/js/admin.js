@@ -1,3 +1,5 @@
+const API_BASE_URL = "https://arms-assignment-and-resources-management-system.up.railway.app";
+
 function showSection(section) {
     document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
 
@@ -590,6 +592,7 @@ function updateAdminPassword() {
     .then(res => res.json())
     .then(data => showToast(data.message));
 }
+
 
 
 
