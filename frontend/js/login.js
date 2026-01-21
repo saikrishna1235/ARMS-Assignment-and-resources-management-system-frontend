@@ -1,3 +1,5 @@
+const API_BASE_URL = "https://arms-assignment-and-resources-management-system.up.railway.app";
+
 function showToast(message) {
     document.getElementById("toastMessage").innerText = message;
     let toast = new bootstrap.Toast(document.getElementById("toastBox"));
@@ -53,5 +55,6 @@ function loginUser() {
         }
     });
 }
+
 
 
