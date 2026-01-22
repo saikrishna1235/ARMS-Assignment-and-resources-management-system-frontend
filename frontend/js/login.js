@@ -1,4 +1,5 @@
-const API_BASE = "https://arms-assignment-and-resources-management-system.up.railway.app";
+const API_BASE = "https://arms-assignment-and-resources-management-system-production.up.railway.app";
+
 
 function showToast(message) {
     document.getElementById("toastMessage").innerText = message;
@@ -55,6 +56,7 @@ function loginUser() {
         }
     });
 }
+
 
 
 
