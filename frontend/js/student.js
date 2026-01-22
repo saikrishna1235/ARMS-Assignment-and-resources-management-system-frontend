@@ -1,6 +1,7 @@
 // frontend/js/student.js
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = "https://arms-assignment-and-resources-management-system.up.railway.app";
+
 
 let stuCoursesCache = [];
 
@@ -332,3 +333,4 @@ document.getElementById("btnChangePassword").addEventListener("click", () => {
         }
     });
 });
+
