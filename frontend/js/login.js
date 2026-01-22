@@ -22,7 +22,7 @@ function loginUser() {
         return;
     }
 
-    fetch("https://arms-assignment-and-resources-management-system.up.railway.app", {
+    fetch(`${API_BASE_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ role, username, password })
@@ -37,25 +37,22 @@ function loginUser() {
 
         if (data.status === "success") {
 
-            // 🔥 Save ALL session info
             sessionStorage.setItem("isLoggedIn", "true");
             sessionStorage.setItem("role", data.role);
-            sessionStorage.setItem("userId", data.userId);   // ← VERY IMPORTANT
+            sessionStorage.setItem("userId", data.userId);
             sessionStorage.setItem("username", username);
+
             if (data.studentId) {
-    sessionStorage.setItem("studentId", data.studentId);
-}
+                sessionStorage.setItem("studentId", data.studentId);
+            }
 
-
-
-            // redirect
             if (data.role === "admin") window.location.href = "admin.html";
             else if (data.role === "teacher") window.location.href = "teacher.html";
             else if (data.role === "student") window.location.href = "student.html";
         }
+    })
+    .catch(err => {
+        console.error(err);
+        showToast("Server not reachable");
     });
 }
-
-
-
-
