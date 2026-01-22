@@ -15,7 +15,7 @@ function showToast(msg) {
 // ============================== LOAD TEACHERS ==============================
 
 function loadTeachers() {
-    fetch("http://localhost:5000/admin/teachers")
+    fetch(`${API_BASE_URL}/admin/teachers`)
     .then(res => res.json())
     .then(data => {
 
@@ -45,7 +45,7 @@ function loadTeachers() {
 // ============================== LOAD STUDENTS ==============================
 
 function loadStudents() {
-    fetch("http://localhost:5000/admin/students")
+    fetch(`${API_BASE_URL}/admin/students`)
         .then(res => res.json())
         .then(data => {
             let tbody = document.querySelector("#studentsTable tbody");
@@ -72,7 +72,8 @@ function loadStudents() {
 // ============================== LOAD COURSES ==============================
 
 function loadCourses() {
-    fetch("http://localhost:5000/admin/courses")
+    fetch(`${API_BASE_URL}/admin/courses`)
+
         .then(res => res.json())
         .then(data => {
             let table = document.querySelector("#courseTable tbody");
@@ -125,7 +126,8 @@ function saveTeacher() {
     let fullname = document.getElementById("t_fullname").value;
     let email = document.getElementById("t_email").value;
 
-    fetch("http://localhost:5000/admin/add-teacher", {
+    fetch(`${API_BASE_URL}/admin/add-teacher`, {
+
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fullname, email })
@@ -142,7 +144,7 @@ function saveCourse() {
     let name = document.getElementById("c_name").value;
     let teacher_id = document.getElementById("c_teacher").value;
 
-    fetch("http://localhost:5000/admin/add-course", {
+    fetch(`${API_BASE_URL}/admin/add-course`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, teacher_id })
@@ -155,7 +157,7 @@ function saveCourse() {
     });
 }
 function loadTeacherDropdown() {
-    fetch("http://localhost:5000/admin/teachers")
+    fetch(`${API_BASE_URL}/admin/teachers`)
         .then(res => res.json())
         .then(data => {
             let sel = document.getElementById("c_teacher");
@@ -170,7 +172,8 @@ function saveTeacher() {
     let fullname = document.getElementById("t_fullname").value;
     let email = document.getElementById("t_email").value;
 
-    fetch("http://localhost:5000/admin/add-teacher", {
+    fetch(`${API_BASE_URL}/admin/add-teacher`, {
+
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fullname, email })
@@ -204,7 +207,8 @@ function saveTeacher() {
     let fullname = document.getElementById("t_fullname").value;
     let email = document.getElementById("t_email").value;
 
-    fetch("http://localhost:5000/admin/add-teacher", {
+   fetch(`${API_BASE_URL}/admin/add-teacher`, {
+
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fullname, email })
@@ -243,7 +247,8 @@ function openEditTeacher(id) {
 function confirmDeleteTeacher() {
     let id = document.getElementById("delete_teacher_id").value;
 
-    fetch(`http://localhost:5000/admin/delete-teacher?id=${id}`, {
+    fetch(`${API_BASE_URL}/admin/delete-teacher?id=${id}`, {
+
         method: "DELETE"
     })
     .then(res => res.json())
@@ -262,7 +267,7 @@ function confirmDeleteTeacher() {
 }
 
 function loadStudents() {
-    fetch("http://localhost:5000/admin/students")
+    fetch(`${API_BASE_URL}/admin/students`)
     .then(res => res.json())
     .then(data => {
         studentData = data;
@@ -299,7 +304,8 @@ function saveStudent() {
     let fullname = document.getElementById("s_fullname").value.trim();
     let email = document.getElementById("s_email").value.trim();
 
-    fetch("http://localhost:5000/admin/add-student", {
+    fetch(`${API_BASE_URL}/admin/add-student`, {
+
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fullname, email })
@@ -342,7 +348,7 @@ function showSection(sec) {
 function loadEnrollmentData() {
 
     // Load Courses for both dropdowns
-    fetch("http://localhost:5000/admin/enroll/courses")
+    fetch(`${API_BASE_URL}/admin/enroll/courses`)
         .then(r => r.json())
         .then(list => {
             let sc = document.getElementById("enroll_student_course");
@@ -358,7 +364,7 @@ function loadEnrollmentData() {
         });
 
     // Load Students
-    fetch("http://localhost:5000/admin/enroll/students")
+    fetch(`${API_BASE_URL}/admin/enroll/students`)
         .then(r => r.json())
         .then(list => {
             let s = document.getElementById("enroll_student");
@@ -369,7 +375,7 @@ function loadEnrollmentData() {
         });
 
     // Load Teachers
-    fetch("http://localhost:5000/admin/enroll/teachers")
+    fetch(`${API_BASE_URL}/admin/enroll/teachers`)
         .then(r => r.json())
         .then(list => {
             let t = document.getElementById("assign_teacher");
@@ -383,7 +389,8 @@ function enrollStudent() {
     const student_id = document.getElementById("enroll_student").value;
     const course_id  = document.getElementById("enroll_student_course").value;
 
-    fetch("http://localhost:5000/admin/enroll/enroll-student", {
+    fetch(`${API_BASE_URL}/admin/enroll/enroll-student`, {
+
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ student_id, course_id })
@@ -395,7 +402,8 @@ function assignTeacher() {
     const teacher_id = document.getElementById("assign_teacher").value;
     const course_id  = document.getElementById("assign_teacher_course").value;
 
-    fetch("http://localhost:5000/admin/enroll/enroll-teacher", {
+   fetch(`${API_BASE_URL}/admin/enroll/enroll-teacher`, {
+
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ teacher_id, course_id })
@@ -405,7 +413,8 @@ function assignTeacher() {
 }
 
 function saveEditStudent() {
-    fetch("http://localhost:5000/admin/edit-student", {
+    fetch(`${API_BASE_URL}/admin/edit-student`, {
+
         method: "PUT",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
@@ -429,7 +438,8 @@ function openDeleteStudent(id) {
 function confirmDeleteStudent() {
     let id = document.getElementById("delete_student_id").value;
 
-    fetch(`http://localhost:5000/admin/delete-student?id=${id}`, {
+    fetch(`${API_BASE_URL}/admin/delete-student?id=${id}`, {
+
         method: "DELETE"
     })
     .then(res => res.json())
@@ -452,7 +462,8 @@ function saveEditCourse() {
         return;
     }
 
-    fetch("http://localhost:5000/admin/edit-course", {
+    fetch(`${API_BASE_URL}/admin/edit-course`, {
+
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, name, teacher_id })
@@ -479,7 +490,8 @@ function openDeleteCourse(id) {
 function confirmDeleteCourse() {
     let id = document.getElementById("delete_course_id").value;
 
-    fetch(`http://localhost:5000/admin/delete-course?id=${id}`, {
+    fetch(`${API_BASE_URL}/admin/delete-course?id=${id}`, {
+
         method: "DELETE"
     })
     .then(res => res.json())
@@ -500,7 +512,8 @@ function openEditCourse(id, name, teacherName, teacherId) {
     document.getElementById("editCourseName").value = name;
 
     // Load teacher list
-    fetch("http://localhost:5000/admin/teachers")
+    fetch(`${API_BASE_URL}/admin/teachers`)
+
         .then(res => res.json())
         .then(teachers => {
 
@@ -528,7 +541,8 @@ function openEditCourse(id, name, teacherName, teacherId) {
 async function loadTeachersIntoDropdown(elementId, selectedId = null) {
     const dropdown = document.getElementById(elementId);
 
-    const res = await fetch("http://localhost:5000/admin/teachers");
+    const res = await fetch(`${API_BASE_URL}/admin/teachers`);
+
     const list = await res.json();
 
     dropdown.innerHTML = `<option value="">-- Select Teacher --</option>`;
@@ -545,7 +559,8 @@ function saveAddStudent() {
     let full_name = document.getElementById("addStudentFullname").value;
     let email = document.getElementById("addStudentEmail").value;
 
-    fetch("http://localhost:5000/admin/add-student", {
+    fetch(`${API_BASE_URL}/admin/add-student`, {
+
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ full_name, email })
@@ -580,7 +595,8 @@ function updateAdminPassword() {
         return;
     }
 
-    fetch("http://localhost:5000/admin/change-password", {
+    fetch(`${API_BASE_URL}/admin/change-password`, {
+
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -592,6 +608,7 @@ function updateAdminPassword() {
     .then(res => res.json())
     .then(data => showToast(data.message));
 }
+
 
 
 
