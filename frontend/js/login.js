@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://arms-assignment-and-resources-management-system.up.railway.app";
+const API_BASE = "https://arms-assignment-and-resources-management-system.up.railway.app";
 
 function showToast(message) {
     document.getElementById("toastMessage").innerText = message;
@@ -22,7 +22,7 @@ function loginUser() {
         return;
     }
 
-    fetch(`${API_BASE_URL}/auth/login`, {
+    fetch(`${API_BASE}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ role, username, password })
@@ -55,6 +55,7 @@ function loginUser() {
         }
     });
 }
+
 
 
 
