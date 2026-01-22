@@ -22,7 +22,7 @@ function loginUser() {
         return;
     }
 
-    fetch("http://localhost:5000/auth/login", {
+    fetch("https://arms-assignment-and-resources-management-system.up.railway.app", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ role, username, password })
@@ -55,6 +55,7 @@ function loginUser() {
         }
     });
 }
+
 
 
 
