@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ARMS | Student Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/sap-theme.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        .sap-header {
+            background: linear-gradient(#dce6f2, #c6d4e4);
+            border-bottom: 2px solid #8fa3bf;
+            padding: 6px 14px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #1a1a1a;
+        }
+
+        .sap-sidebar {
+            background: #eef3fb;
+            border-right: 2px solid #b6c6d8;
+            height: calc(100vh - 45px);
+            padding: 8px;
+        }
+
+        .sap-tree {
+            font-size: 13px;
+            line-height: 22px;
+        }
+
+        .sap-tree button {
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
+            padding: 5px 8px;
+            font-size: 13px;
+            border-radius: 4px;
+        }
+
+        .sap-tree button.active {
+            background: #d0d9e8;
+            border-left: 4px solid #2d74b9;
+            font-weight: bold;
+        }
+
+        .sap-content {
+            background: #f4f6f9;
+            padding: 15px;
+            height: calc(100vh - 45px);
+            overflow-y: auto;
+        }
+
+        .sap-panel {
+            background: #ffffff;
+            border: 1px solid #b6c6d8;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .sap-panel-title {
+            font-weight: bold;
+            font-size: 14px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #b6c6d8;
+            margin-bottom: 10px;
+        }
+
+        .sap-btn {
+            padding: 4px 12px;
+            background: #e6edf7;
+            border: 1px solid #7c9ccc;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .sap-btn:hover {
+            background: #d7e3f5;
+        }
+
+        .sap-course-card {
+            border: 1px solid #b6c6d8;
+            background: #ffffff;
+            padding: 8px;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .sap-course-title {
+            font-weight: bold;
+        }
+
+        .modal-content {
+            border: 1px solid #8fa3bf;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ======= SAP HEADER ======= -->
+<div class="sap-header d-flex justify-content-between align-items-center">
+    <span>ARMS | Student Dashboard</span>
+    <button class="sap-btn" id="logoutBtn">Logout</button>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- ======= LEFT SIDEBAR ======= -->
+        <div class="col-12 col-md-3 col-lg-2 sap-sidebar">
+            <div class="sap-tree">
+                <button class="active" data-sec="dashboard">📘 Dashboard</button>
+                <button data-sec="materials">📁 Course Materials</button>
+                <button data-sec="assignments">📝 Assignments</button>
+                <button data-sec="marks">📊 Marks</button>
+                <button data-sec="profile">👤 Profile</button>
+            </div>
+        </div>
+
+        <!-- ======= RIGHT CONTENT ======= -->
+        <div class="col-12 col-md-9 col-lg-10 sap-content">
+
+            <!-- Dashboard -->
+            <section id="dashboard" class="sap-panel">
+                <div class="sap-panel-title">My Courses</div>
+                <div class="row" id="stuCourseList"></div>
+            </section>
+
+            <!-- Materials -->
+            <section id="materials" class="sap-panel d-none">
+                <div class="sap-panel-title d-flex justify-content-between align-items-center">
+                    <span>Course Materials</span>
+                </div>
+
+                <label class="form-label small mb-1">Course</label>
+                <select id="stuMaterialCourseSelect" class="form-select form-select-sm mb-2"></select>
+
+                <table class="table table-sm">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>Uploaded</th>
+                        <th>File</th>
+                    </tr>
+                    </thead>
+                    <tbody id="stuMaterialTable"></tbody>
+                </table>
+            </section>
+
+            <!-- Assignments -->
+            <section id="assignments" class="sap-panel d-none">
+                <div class="sap-panel-title d-flex justify-content-between align-items-center">
+                    <span>Assignments</span>
+                </div>
+
+                <label class="form-label small mb-1">Course</label>
+                <select id="stuAssignCourseSelect" class="form-select form-select-sm mb-2"></select>
+
+                <table class="table table-sm">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Due Date</th>
+                        <th>Created</th>
+                        <th>Status</th>
+                        <th>Marks</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="stuAssignTable"></tbody>
+                </table>
+            </section>
+
+            <!-- Marks -->
+            <section id="marks" class="sap-panel d-none">
+                <div class="sap-panel-title">Marks</div>
+                <table class="table table-sm">
+                    <thead>
+                    <tr>
+                        <th>Course</th>
+                        <th>Assignment</th>
+                        <th>Marks</th>
+                        <th>Submitted</th>
+                    </tr>
+                    </thead>
+                    <tbody id="stuMarksTable"></tbody>
+                </table>
+            </section>
+
+            <!-- Profile -->
+            <section id="profile" class="sap-panel d-none">
+                <div class="sap-panel-title">My Profile</div>
+                <div id="stuProfileContainer"></div>
+                <div class="sap-panel mt-3">
+    <div class="sap-panel-title">Change Password</div>
+
+    <label class="form-label small">Old Password</label>
+    <input type="password" id="oldPass" class="form-control form-control-sm mb-2">
+
+    <label class="form-label small">New Password</label>
+    <input type="password" id="newPass" class="form-control form-control-sm mb-2">
+
+    <label class="form-label small">Confirm Password</label>
+    <input type="password" id="confirmPass" class="form-control form-control-sm mb-2">
+
+    <button class="sap-btn" id="btnChangePassword">Update Password</button>
+</div>
+
+            </section>
+
+        </div>
+    </div>
+</div>
+
+<!-- ======= MODAL: SUBMIT ASSIGNMENT ======= -->
+<div class="modal fade" id="modalSubmitAssignment" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="submitModalTitle">Submit Assignment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="stuSubmitAssignmentId">
+                <label class="form-label small">Upload File</label>
+                <input type="file" id="stuSubmitFileInput" class="form-control form-control-sm" accept=".pdf,.doc,.docx,.zip,.ppt,.pptx">
+                <div class="small text-muted mt-1">
+                    Allowed: PDF, DOC, DOCX, PPT, PPTX, ZIP
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="sap-btn" data-bs-dismiss="modal">Cancel</button>
+                <button class="sap-btn" id="btnSaveSubmission">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ======= TOAST ======= -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1090">
+    <div id="studentToast" class="toast align-items-center text-bg-light border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body" id="studentToastMsg"></div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+window.onload = function() {
+    if (!sessionStorage.getItem("isLoggedIn")) {
+        window.location.href = "login.html";
+    }
+};
+</script>
+
+<script src="js/student.js"></script>
+</body>
+</html>
